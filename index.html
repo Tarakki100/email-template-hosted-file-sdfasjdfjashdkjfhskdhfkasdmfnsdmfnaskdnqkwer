@@ -84,7 +84,11 @@
 const API_CONFIG = {
     baseUrl: 'https://schoolbusapi.com/school/all/bus_summary/',
     schoolId: '6',
-    date: '2025-08-14' // You can make this dynamic based on today's date
+    date: (() => {
+        const d = new Date();
+        d.setDate(d.getDate() - 1); // Go back one day (yesterday)
+        return d.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    })()
 };
 
 // Utility functions
