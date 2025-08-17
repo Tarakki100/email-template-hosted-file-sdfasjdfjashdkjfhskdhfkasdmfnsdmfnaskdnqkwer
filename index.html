@@ -94,11 +94,21 @@ function getDateFromUrlOrYesterday() {
     d.setDate(d.getDate() - 1);
     return d.toISOString().split("T")[0];
 }
+
+function getSchoolFromUrlOrYesterday() {
+    const params = new URLSearchParams(window.location.search);
+    const dateFromUrl = params.get("school_id"); 
+    
+    if (dateFromUrl) {
+        return dateFromUrl; // use provided date
+    }
+    return "1";
+}
     
 // Configuration
 const API_CONFIG = {
     baseUrl: 'https://schoolbusapi.com/school/all/bus_summary/',
-    schoolId: '6',
+    schoolId: getSchoolFromUrlOrYesterday(),
     date: getDateFromUrlOrYesterday()
 };
 
