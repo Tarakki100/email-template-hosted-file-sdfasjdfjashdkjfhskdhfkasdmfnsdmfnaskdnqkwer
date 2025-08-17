@@ -80,15 +80,26 @@
 <div id="bus-reports-container"></div>
 
 <script>
+
+function getDateFromUrlOrYesterday() {
+    const params = new URLSearchParams(window.location.search);
+    const dateFromUrl = params.get("date"); // expects ?date=2022-12-05
+    
+    if (dateFromUrl) {
+        return dateFromUrl; // use provided date
+    }
+
+    // fallback to yesterday
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().split("T")[0];
+}
+    
 // Configuration
 const API_CONFIG = {
     baseUrl: 'https://schoolbusapi.com/school/all/bus_summary/',
     schoolId: '6',
-    date: (() => {
-        const d = new Date();
-        d.setDate(d.getDate() - 1); // Go back one day (yesterday)
-        return d.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-    })()
+    date: getDateFromUrlOrYesterday()
 };
 
 // Utility functions
