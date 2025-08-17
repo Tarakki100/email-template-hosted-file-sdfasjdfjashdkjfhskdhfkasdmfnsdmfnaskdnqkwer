@@ -246,12 +246,12 @@ function createTripSummary(tripData) {
 
 // Create individual bus report HTML
 function createBusReport(busName, busData) {
-    const busNumber = busName.split(' - ')[2]; // Extract bus number like "MH 15 EF 0978"
+    //const busNumber = busName.split(' - ')[2]; // Extract bus number like "MH 15 EF 0978"
+    const busNumber = busName.split(' - ').slice(1).join(' - ');
     
     return `
         <div class="bus-container">
-            <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 ${busName}</h2>
-            
+            <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 ${busNumber}</h2>
             ${createSystemStatus()}
             ${createPerformanceSummary(busData.activity_summary)}
             ${createAttendanceReport(busData.route_wise_attendance_report)}
