@@ -27,9 +27,7 @@
     <h1 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Daily School Bus Report - Priyadarshani International School</h1>
     <p id="report-date" style="text-align: center; font-weight: bold; margin: 6px 0;">Date: Loading...</p>
 </div>
-</div>
-</div>
-</div>
+
 
 <!-- Loading/Error Messages -->
 <div id="loading" class="loading" style="display:none;">
@@ -105,9 +103,7 @@ function parseDuration(durationString) {
 // Create system status HTML
 function createSystemStatus() {
     return `
-    <div class="bus-widget">
-<div id="bus-reports-container">
-<div class="bus-container">
+
 
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
         <div class="system-status">
@@ -124,9 +120,7 @@ function createSystemStatus() {
                 <strong>OPERATIONAL</strong>
             </div>
         </div>
-        </div>
-        </div>
-        </div>
+     
         
     `;
 }
@@ -134,9 +128,7 @@ function createSystemStatus() {
 // Create performance summary HTML
 function createPerformanceSummary(activitySummary) {
     return `
-    <div class="bus-widget">
-<div id="bus-reports-container">
-<div class="bus-container">
+
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">📊 Performance & Activity Summary</h3>
         <table>
             <tr>
@@ -147,9 +139,7 @@ function createPerformanceSummary(activitySummary) {
             </tr>
         </table>
      
-        </div>
-        </div>
-        </div>
+
     `;
 }
 
@@ -166,9 +156,6 @@ function createAttendanceReport(attendanceData) {
     `).join('');
 
     return `
-    <div class="bus-widget">
-<div id="bus-reports-container">
-<div class="bus-container">
 
     
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🎓Route Wise Student Attendance Report</h3>
@@ -182,9 +169,7 @@ function createAttendanceReport(attendanceData) {
             </tr>
             ${tableRows}
         </table>
-          </div>
-        </div>
-        </div>
+        
     `;
 }
 
@@ -226,9 +211,6 @@ function createTripSummary(tripData) {
     // }
 
     return `
-    <div class="bus-widget">
-<div id="bus-reports-container">
-<div class="bus-container">
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
         <table>
             <tr>
@@ -242,9 +224,7 @@ function createTripSummary(tripData) {
             </tr>
             ${tripRows}
         </table>
-        </div>
-        </div>
-        </div>
+     
     `;
 }
 
@@ -254,9 +234,7 @@ function createBusReport(busName, busData) {
     const busNumber = busName.split(' - ').slice(1).join(' - ');
     
     return `
-    <div class="bus-widget">
-<div id="bus-reports-container">
-<div class="bus-container">
+   
         <div class="bus-container">
             <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 ${busNumber}</h2>
             ${createSystemStatus()}
@@ -269,9 +247,7 @@ function createBusReport(busName, busData) {
                  alt="Speed Analysis Chart" 
                  style="max-width: 100%; height: auto;">
         </div>
-        </div>
-        </div>
-        </div>
+        
     `;
 }
 
