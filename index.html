@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="robots" content="noindex">
@@ -6,69 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Bus Monitoring - Daily Digest</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #6a0dad;
-        }
-        .error {
-            text-align: center;
-            padding: 20px;
-            color: #dc3545;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-        }
-        .bus-container {
-            margin-bottom: 30px;
-            border: 3px solid #6a0dad;
-            border-radius: 10px;
-            padding: 15px;
-        }
-        .system-status {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        .status-box {
-            text-align: center;
-            padding: 10px;
-            border: 2px solid #6a0dad;
-            border-radius: 8px;
-            background-color: #d4edda;
-            color: #155724;
-            margin: 5px;
-            flex: 1;
-            min-width: 120px;
-            max-width: 180px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-        }
-        th, td {
-            border: 2px solid #6a0dad;
-            padding: 12px;
-            text-align: center;
-        }
-        .more-trips-row {
-            background-color: #f3e8ff;
-        }
-    </style>
+<style>
+.bus-widget .loading{ text-align:center; padding:20px; color:#6a0dad;}
+.bus-widget .error{ text-align:center; padding:20px; color:#dc3545; background-color:#f8d7da; border:1px solid #f5c6cb; border-radius:5px;}
+.bus-widget .bus-container{ margin-bottom:30px; border:3px solid #6a0dad; border-radius:10px; padding:15px;}
+.bus-widget .system-status{ display:flex; justify-content:space-around; flex-wrap:wrap; margin-bottom:15px;}
+.bus-widget .status-box{ text-align:center; padding:10px; border:2px solid #6a0dad; border-radius:8px; background-color:#d4edda; color:#155724; margin:5px; flex:1; min-width:120px; max-width:180px;}
+.bus-widget table{ width:100%; border-collapse:collapse; margin-bottom:15px;}
+.bus-widget th,.bus-widget td{ border:2px solid #6a0dad; padding:12px; text-align:center;}
+.bus-widget .more-trips-row{ background-color:#f3e8ff;}
+</style>
 </head>
 <body style="font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 15px;">
 
 <!-- HEADER SECTION WITH LOGO -->
+<div class="bus-widget">
+<div id="bus-reports-container">
+<div class="bus-container">
 <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px;">
     <h1 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Daily School Bus Report - Priyadarshani International School</h1>
     <p id="report-date" style="text-align: center; font-weight: bold; margin: 6px 0;">Date: Loading...</p>
 </div>
+</div>
+</div>
+</div>
 
 <!-- Loading/Error Messages -->
-<div id="loading" class="loading">
+<div id="loading" class="loading" style="display:none;">
     <i class="fas fa-spinner fa-spin"></i> Loading bus data...
 </div>
 
@@ -77,7 +41,8 @@
 </div>
 
 <!-- Bus Reports Container -->
-<div id="bus-reports-container"></div>
+<div id="bus-reports-container">
+<div class="bus-container">
 
 <script>
 
@@ -140,6 +105,10 @@ function parseDuration(durationString) {
 // Create system status HTML
 function createSystemStatus() {
     return `
+    <div class="bus-widget">
+<div id="bus-reports-container">
+<div class="bus-container">
+
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
         <div class="system-status">
             <div class="status-box">
@@ -155,12 +124,35 @@ function createSystemStatus() {
                 <strong>OPERATIONAL</strong>
             </div>
         </div>
+        </div>
+        </div>
+        </div>
+        
     `;
 }
 
 // Create performance summary HTML
 function createPerformanceSummary(activitySummary) {
     return `
+    <div class="bus-widget">
+<div id="bus-reports-container">
+<div class="bus-container">
+
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
+        <div class="system-status">
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">📹 CCTV</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🛰 GPS</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🖥 SERVER</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+        </div>
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">📊 Performance & Activity Summary</h3>
         <table>
             <tr>
@@ -170,6 +162,10 @@ function createPerformanceSummary(activitySummary) {
                 <td>🎯 Average Speed<br><strong>${activitySummary.average_speed}</strong></td>
             </tr>
         </table>
+     
+        </div>
+        </div>
+        </div>
     `;
 }
 
@@ -186,6 +182,25 @@ function createAttendanceReport(attendanceData) {
     `).join('');
 
     return `
+    <div class="bus-widget">
+<div id="bus-reports-container">
+<div class="bus-container">
+
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
+        <div class="system-status">
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">📹 CCTV</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🛰 GPS</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🖥 SERVER</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+        </div>
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🎓Route Wise Student Attendance Report</h3>
         <table>
             <tr>
@@ -197,6 +212,9 @@ function createAttendanceReport(attendanceData) {
             </tr>
             ${tableRows}
         </table>
+          </div>
+        </div>
+        </div>
     `;
 }
 
@@ -238,6 +256,9 @@ function createTripSummary(tripData) {
     // }
 
     return `
+    <div class="bus-widget">
+<div id="bus-reports-container">
+<div class="bus-container">
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
         <table>
             <tr>
@@ -251,6 +272,9 @@ function createTripSummary(tripData) {
             </tr>
             ${tripRows}
         </table>
+        </div>
+        </div>
+        </div>
     `;
 }
 
@@ -260,6 +284,9 @@ function createBusReport(busName, busData) {
     const busNumber = busName.split(' - ').slice(1).join(' - ');
     
     return `
+    <div class="bus-widget">
+<div id="bus-reports-container">
+<div class="bus-container">
         <div class="bus-container">
             <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 ${busNumber}</h2>
             ${createSystemStatus()}
@@ -271,6 +298,9 @@ function createBusReport(busName, busData) {
             <img src="https://i.postimg.cc/XJDrQ1hT/B1-MH15-AT1254-2025-08-08.png" 
                  alt="Speed Analysis Chart" 
                  style="max-width: 100%; height: auto;">
+        </div>
+        </div>
+        </div>
         </div>
     `;
 }
