@@ -236,10 +236,11 @@ function createBusReport(busName, busData) {
     const busNumber = busName.split(' - ').slice(1).join(' - ');
     const safeBusNumber = busNumber.replace(/\s+/g, "").replace(/[^a-zA-Z0-9\-]/g, "");
     const today = new Date();
-    today.setDate(today.getDate() - 1);
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
-    const dd = String(today.getDate()).padStart(2, "0");
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const yyyy = yesterday.getFullYear();
+    const mm = String(yesterday.getMonth() + 1).padStart(2, "0");
+    const dd = String(yesterday.getDate()).padStart(2, "0");
     const todayDate = `${yyyy}-${mm}-${dd}`;
     return `
    
