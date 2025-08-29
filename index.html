@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="robots" content="noindex">
@@ -15,9 +15,43 @@
 .bus-widget table{ width:100%; border-collapse:collapse; margin-bottom:15px;}
 .bus-widget th,.bus-widget td{ border:2px solid #6a0dad; padding:12px; text-align:center;}
 .bus-widget .more-trips-row{ background-color:#f3e8ff;}
+
+.copy-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.copy-button:hover {
+    background-color: #5a0cad;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+.copy-button.copied {
+    background-color: #28a745;
+}
+
+.copy-button.copied:hover {
+    background-color: #28a745;
+}
 </style>
 </head>
 <body style="font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 15px;">
+
+<button id="copyButton" class="copy-button">
+    <i class="fas fa-copy"></i> Copy Content
+</button>
 
 <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px;">
     <h1 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Daily School Bus Report - Priyadarshani International School</h1>
@@ -28,8 +62,6 @@
 <div class="bus-widget">
 <div id="bus-reports-container">
 <div class="bus-container">
-
-
 
 <!-- Loading/Error Messages -->
 <div id="loading" class="loading" style="display:none;">
@@ -99,14 +131,12 @@ function formatTime(timeString) {
 
 function parseDuration(durationString) {
     if (!durationString) return '-';
-    return durationString.replace(/(\d+)h (\d+)m (\d+)s/, '$1 Hr $2 min');
+    return durationString.replace(/(\d+)h (\d+)m (\d+)s/, '$1h $2m');
 }
 
 // Create system status HTML
 function createSystemStatus() {
     return `
-
-
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
         <div class="system-status">
             <div class="status-box">
@@ -122,15 +152,12 @@ function createSystemStatus() {
                 <strong>OPERATIONAL</strong>
             </div>
         </div>
-     
-        
     `;
 }
 
 // Create performance summary HTML
 function createPerformanceSummary(activitySummary) {
     return `
-
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">📊 Performance & Activity Summary</h3>
         <table>
             <tr>
@@ -140,8 +167,6 @@ function createPerformanceSummary(activitySummary) {
                 <td>🎯 Average Speed<br><strong>${activitySummary.average_speed}</strong></td>
             </tr>
         </table>
-     
-
     `;
 }
 
@@ -158,8 +183,6 @@ function createAttendanceReport(attendanceData) {
     `).join('');
 
     return `
-
-    
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🎓Route Wise Student Attendance Report</h3>
         <table>
             <tr>
@@ -171,7 +194,6 @@ function createAttendanceReport(attendanceData) {
             </tr>
             ${tableRows}
         </table>
-        
     `;
 }
 
@@ -198,20 +220,6 @@ function createTripSummary(tripData) {
         tripNumber++;
     });
 
-    // // Add "more trips" row if there are more than 3 trips
-    // if (tripData.length > 3) {
-    //     tripRows += `
-    //         <tr class="more-trips-row">
-    //             <td colspan="7" style="background-color: #f3e8ff;">
-    //                 📊 Showing ${Math.min(3, tripData.length)} of ${tripData.length} trips. 
-    //                 <a href="#" style="color: #6a0dad; text-decoration: underline; font-weight: bold;">
-    //                     View all trips on dashboard
-    //                 </a>
-    //             </td>
-    //         </tr>
-    //     `;
-    // }
-
     return `
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
         <table>
@@ -226,13 +234,11 @@ function createTripSummary(tripData) {
             </tr>
             ${tripRows}
         </table>
-     
     `;
 }
 
 // Create individual bus report HTML
 function createBusReport(busName, busData) {
-    //const busNumber = busName.split(' - ')[2]; // Extract bus number like "MH 15 EF 0978"
     const busNumber = busName.split(' - ').slice(1).join(' - ');
     const safeBusNumber = busNumber.replace(/\s+/g, "").replace(/[^a-zA-Z0-9\-]/g, "");
     const today = new Date();
@@ -243,7 +249,6 @@ function createBusReport(busName, busData) {
     const dd = String(yesterday.getDate()).padStart(2, "0");
     const todayDate = `${yyyy}-${mm}-${dd}`;
     return `
-   
         <div class="bus-container">
             <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 ${busNumber}</h2>
             ${createSystemStatus()}
@@ -256,8 +261,48 @@ function createBusReport(busName, busData) {
                  alt="Speed Analysis Chart" 
                  style="max-width: 100%; height: auto;">
         </div>
-        
     `;
+}
+
+// Copy to clipboard functionality
+async function copyRenderedContent() {
+    const copyButton = document.getElementById('copyButton');
+    const originalText = copyButton.innerHTML;
+    
+    try {
+        // Clone the document and remove scripts
+        const html = document.documentElement.cloneNode(true);
+        html.querySelectorAll("script").forEach(s => s.remove());
+        
+        // Remove the copy button from the cloned content
+        const copyButtonClone = html.querySelector('#copyButton');
+        if (copyButtonClone) {
+            copyButtonClone.remove();
+        }
+        
+        // Get the cleaned HTML
+        const cleanedHTML = html.outerHTML;
+        
+        // Copy to clipboard
+        await navigator.clipboard.writeText(cleanedHTML);
+        
+        // Show success feedback
+        copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        copyButton.classList.add('copied');
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+            copyButton.innerHTML = originalText;
+            copyButton.classList.remove('copied');
+        }, 2000);
+        
+    } catch (err) {
+        console.error('Failed to copy: ', err);
+        copyButton.innerHTML = '<i class="fas fa-times"></i> Failed';
+        setTimeout(() => {
+            copyButton.innerHTML = originalText;
+        }, 2000);
+    }
 }
 
 // Fetch and render bus data
@@ -314,7 +359,12 @@ function refreshData() {
 }
 
 // Initialize on page load
-document.addEventListener('DOMContentLoaded', fetchAndRenderBusData);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAndRenderBusData();
+    
+    // Add event listener for copy button
+    document.getElementById('copyButton').addEventListener('click', copyRenderedContent);
+});
 
 // Optional: Auto-refresh every 5 minutes
 // setInterval(refreshData, 5 * 60 * 1000);
