@@ -118,7 +118,11 @@ function formatDate(dateString) {
         day: 'numeric' 
     });
 }
-
+function formatSpeed(speedStr) {
+    // Example input: "57.00 km/h"
+    const num = parseFloat(speedStr); // get number part
+    return `${Math.round(num)} km/h`; // round & add unit back
+}
 function formatTime(timeString) {
     if (!timeString) return '-';
     const date = new Date(timeString);
@@ -163,7 +167,7 @@ function createPerformanceSummary(activitySummary) {
             <tr>
                 <td>📏 Total Distance<br><strong>${activitySummary.total_distance}</strong></td>
                 <td>⏱ Running Time<br><strong>${parseDuration(activitySummary.running_time)}</strong></td>
-                <td>🚀 Max Speed<br><strong>${activitySummary.max_speed}</strong></td>
+                <td>🚀 Max Speed<br><strong>${formatSpeed(activitySummary.max_speed)}</strong></td>
                 <td>🎯 Average Speed<br><strong>${activitySummary.average_speed}</strong></td>
             </tr>
         </table>
@@ -236,7 +240,7 @@ tripData.forEach(tripObj => {
             <td>${formatTime(trip.end_time)}</td>
             <td>${trip.trip_distance}</td>
             <td>${trip.duration}</td>
-            <td>${trip.max_speed}</td>
+            <td>${formatSpeed(trip.max_speed)}</td>
             <td>${trip.average_speed}</td>
         </tr>
     `;
