@@ -1,0 +1,396 @@
+<html lang="en"><head>
+    <meta name="robots" content="noindex">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Bus Monitoring - Daily Digest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+.bus-widget .loading{ text-align:center; padding:20px; color:#6a0dad;}
+.bus-widget .error{ text-align:center; padding:20px; color:#dc3545; background-color:#f8d7da; border:1px solid #f5c6cb; border-radius:5px;}
+.bus-widget .bus-container{ margin-bottom:30px; border:3px solid #6a0dad; border-radius:10px; padding:15px;}
+.bus-widget .system-status{ display:flex; justify-content:space-around; flex-wrap:wrap; margin-bottom:15px;}
+.bus-widget .status-box{ text-align:center; padding:10px; border:2px solid #6a0dad; border-radius:8px; background-color:#d4edda; color:#155724; margin:5px; flex:1; min-width:120px; max-width:180px;}
+.bus-widget table{ width:100%; border-collapse:collapse; margin-bottom:15px;}
+.bus-widget th,.bus-widget td{ border:2px solid #6a0dad; padding:12px; text-align:center;}
+.bus-widget .more-trips-row{ background-color:#f3e8ff;}
+
+.copy-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.copy-button:hover {
+    background-color: #5a0cad;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+.copy-button.copied {
+    background-color: #28a745;
+}
+
+.copy-button.copied:hover {
+    background-color: #28a745;
+}
+</style>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 15px;">
+
+
+
+<div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px;">
+    <h1 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Daily School Bus Report - Priyadarshani International School</h1>
+    <p id="report-date" style="text-align: center; font-weight: bold; margin: 6px 0;">Date: September 12, 2025</p>
+</div> 
+ 
+<!-- HEADER SECTION WITH LOGO -->
+<div class="bus-widget">
+<div id="bus-reports-container">
+        <div class="bus-container">
+            <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 B1 - MH 15 EF 0978</h2>
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
+        <div class="system-status">
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">📹 CCTV</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🛰 GPS</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🖥 SERVER</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+        </div>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">📊 Performance &amp; Activity Summary</h3>
+        <table>
+            <tbody><tr>
+                <td>📏 Total Distance<br><strong>37.00 km</strong></td>
+                <td>⏱ Running Time<br><strong>2h 9m</strong></td>
+                <td>🚀 Max Speed<br><strong>59.00 km/h</strong></td>
+                <td>🎯 Average Speed<br><strong>21.15 km/h</strong></td>
+            </tr>
+        </tbody></table>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🎓Route Wise Student Attendance Report</h3>
+        <table>
+            <tbody><tr>
+                <th>🚍 Route Name</th>
+                <th>👩‍🎓 Total Students</th>
+                <th>✅ Present</th>
+                <th>❌ Absent</th>
+                <th>⚠ Not Marked</th>
+            </tr>
+            
+        <tr>
+            <td>Bus 1 - Pickup Route</td>
+            <td>43</td>
+            <td>42</td>
+            <td>1</td>
+            <td>0</td>
+        </tr>
+    
+        <tr>
+            <td>Bus 1 - Drop Route</td>
+            <td>43</td>
+            <td>42</td>
+            <td>1</td>
+            <td>0</td>
+        </tr>
+    
+        </tbody></table>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
+        <table>
+            <tbody><tr>
+                <th>🚍 Trip No</th>
+                <th>⏰ Start Time</th>
+                <th>🔚 End Time</th>
+                <th>⏳ Trip Distance</th>
+                <th>⏲ Duration</th>
+                <th>🚀 Max Speed</th>
+                <th>🎯 Avg Speed</th>
+            </tr>
+            
+            <tr>
+                <td>01</td>
+                <td>07:16 AM</td>
+                <td>08:25 AM</td>
+                <td>18.50 km</td>
+                <td>1h 8m</td>
+                <td>51.00 km/h</td>
+                <td>20.20 km/h</td>
+            </tr>
+        
+            <tr>
+                <td>02</td>
+                <td>02:43 PM</td>
+                <td>03:44 PM</td>
+                <td>18.50 km</td>
+                <td>1h 0m</td>
+                <td>59.00 km/h</td>
+                <td>22.10 km/h</td>
+            </tr>
+        
+        </tbody></table>
+    
+            
+            <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Speed Analysis</h3>
+            <img src="https://i.postimg.cc/d3dXbqJz/B1-MH-15-EF-0978-2025-09-12.png" alt="Speed Analysis Chart" style="max-width: 100%; height: auto;">
+        </div>
+    
+        <div class="bus-container">
+            <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 B3 - MH 15 EF 0806</h2>
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
+        <div class="system-status">
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">📹 CCTV</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🛰 GPS</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🖥 SERVER</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+        </div>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">📊 Performance &amp; Activity Summary</h3>
+        <table>
+            <tbody><tr>
+                <td>📏 Total Distance<br><strong>51.70 km</strong></td>
+                <td>⏱ Running Time<br><strong>2h 22m</strong></td>
+                <td>🚀 Max Speed<br><strong>68.00 km/h</strong></td>
+                <td>🎯 Average Speed<br><strong>24.37 km/h</strong></td>
+            </tr>
+        </tbody></table>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🎓Route Wise Student Attendance Report</h3>
+        <table>
+            <tbody><tr>
+                <th>🚍 Route Name</th>
+                <th>👩‍🎓 Total Students</th>
+                <th>✅ Present</th>
+                <th>❌ Absent</th>
+                <th>⚠ Not Marked</th>
+            </tr>
+            
+        <tr>
+            <td>Bus 3 - Pickup Route</td>
+            <td>44</td>
+            <td>37</td>
+            <td>7</td>
+            <td>0</td>
+        </tr>
+    
+        <tr>
+            <td>Bus 3 - Drop Route</td>
+            <td>44</td>
+            <td>37</td>
+            <td>7</td>
+            <td>0</td>
+        </tr>
+    
+        </tbody></table>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
+        <table>
+            <tbody><tr>
+                <th>🚍 Trip No</th>
+                <th>⏰ Start Time</th>
+                <th>🔚 End Time</th>
+                <th>⏳ Trip Distance</th>
+                <th>⏲ Duration</th>
+                <th>🚀 Max Speed</th>
+                <th>🎯 Avg Speed</th>
+            </tr>
+            
+            <tr>
+                <td>01</td>
+                <td>07:16 AM</td>
+                <td>07:24 AM</td>
+                <td>3.80 km</td>
+                <td>0h 8m</td>
+                <td>41.00 km/h</td>
+                <td>26.90 km/h</td>
+            </tr>
+        
+            <tr>
+                <td>02</td>
+                <td>07:29 AM</td>
+                <td>08:36 AM</td>
+                <td>22.30 km</td>
+                <td>1h 7m</td>
+                <td>68.00 km/h</td>
+                <td>22.70 km/h</td>
+            </tr>
+        
+            <tr>
+                <td>03</td>
+                <td>02:44 PM</td>
+                <td>03:51 PM</td>
+                <td>25.60 km</td>
+                <td>1h 7m</td>
+                <td>64.00 km/h</td>
+                <td>23.50 km/h</td>
+            </tr>
+        
+        </tbody></table>
+    
+            
+            <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Speed Analysis</h3>
+            <img src="https://i.postimg.cc/ZK82jK7N/B3-MH-15-EF-0806-2025-09-12.png" alt="Speed Analysis Chart" style="max-width: 100%; height: auto;">
+        </div>
+    
+        <div class="bus-container">
+            <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 B9 - MH 15 GV 7354</h2>
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🖥 System Status</h3>
+        <div class="system-status">
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">📹 CCTV</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🛰 GPS</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+            <div class="status-box">
+                <p style="text-align: center; font-weight: bold; margin: 5px 0;">🖥 SERVER</p>
+                <strong>OPERATIONAL</strong>
+            </div>
+        </div>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">📊 Performance &amp; Activity Summary</h3>
+        <table>
+            <tbody><tr>
+                <td>📏 Total Distance<br><strong>70.40 km</strong></td>
+                <td>⏱ Running Time<br><strong>2h 42m</strong></td>
+                <td>🚀 Max Speed<br><strong>66.00 km/h</strong></td>
+                <td>🎯 Average Speed<br><strong>25.94 km/h</strong></td>
+            </tr>
+        </tbody></table>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🎓Route Wise Student Attendance Report</h3>
+        <table>
+            <tbody><tr>
+                <th>🚍 Route Name</th>
+                <th>👩‍🎓 Total Students</th>
+                <th>✅ Present</th>
+                <th>❌ Absent</th>
+                <th>⚠ Not Marked</th>
+            </tr>
+            
+        <tr>
+            <td>Bus 9 - Pickup Route</td>
+            <td>34</td>
+            <td>0</td>
+            <td>0</td>
+            <td>34</td>
+        </tr>
+    
+        <tr>
+            <td>Bus 9 - Drop Route</td>
+            <td>34</td>
+            <td>0</td>
+            <td>0</td>
+            <td>34</td>
+        </tr>
+    
+        </tbody></table>
+    
+            
+        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
+        <table>
+            <tbody><tr>
+                <th>🚍 Trip No</th>
+                <th>⏰ Start Time</th>
+                <th>🔚 End Time</th>
+                <th>⏳ Trip Distance</th>
+                <th>⏲ Duration</th>
+                <th>🚀 Max Speed</th>
+                <th>🎯 Avg Speed</th>
+            </tr>
+            
+            <tr>
+                <td>01</td>
+                <td>07:32 AM</td>
+                <td>08:34 AM</td>
+                <td>32.40 km</td>
+                <td>1h 2m</td>
+                <td>66.00 km/h</td>
+                <td>38.00 km/h</td>
+            </tr>
+        
+            <tr>
+                <td>02</td>
+                <td>09:45 AM</td>
+                <td>10:02 AM</td>
+                <td>1.50 km</td>
+                <td>0h 17m</td>
+                <td>31.00 km/h</td>
+                <td>10.50 km/h</td>
+            </tr>
+        
+            <tr>
+                <td>03</td>
+                <td>10:15 AM</td>
+                <td>10:18 AM</td>
+                <td>1.00 km</td>
+                <td>0h 3m</td>
+                <td>40.00 km/h</td>
+                <td>15.40 km/h</td>
+            </tr>
+        
+            <tr>
+                <td>04</td>
+                <td>02:43 PM</td>
+                <td>03:40 PM</td>
+                <td>24.10 km</td>
+                <td>0h 57m</td>
+                <td>65.00 km/h</td>
+                <td>30.30 km/h</td>
+            </tr>
+        
+            <tr>
+                <td>05</td>
+                <td>03:49 PM</td>
+                <td>04:12 PM</td>
+                <td>11.40 km</td>
+                <td>0h 22m</td>
+                <td>59.00 km/h</td>
+                <td>35.50 km/h</td>
+            </tr>
+        
+        </tbody></table>
+    
+            
+            <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Speed Analysis</h3>
+            <img src="https://i.postimg.cc/tCQ8hV5y/B9-MH-15-GV-7354-2025-09-12.png" alt="Speed Analysis Chart" style="max-width: 100%; height: auto;">
+        </div>
+    </div></div></body></html>
