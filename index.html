@@ -131,7 +131,7 @@ function formatTime(timeString) {
 
 function parseDuration(durationString) {
     if (!durationString) return '-';
-    return durationString.replace(/(\d+)h (\d+)m (\d+)s/, '$1h $2m');
+    return durationString.replace(/(\d+)h (\d+)m (\d+)s/, '$ h $ m');
 }
 
 // Create system status HTML
@@ -196,45 +196,76 @@ function createAttendanceReport(attendanceData) {
         </table>
     `;
 }
+function parseDuration(durationStr) {
+    console.log("Parsing duration:", durationStr); // 🔧 Debugging output
 
+    // Accept formats like: "0h 31m", "0 h 31 m", "0 h 31 min"
+    let hours = 0, minutes = 0;
+
+    const hourMatch = durationStr.match(/(\d+)\s*h/); // Matches "0h" or "0 h"
+    const minuteMatch = durationStr.match(/(\d+)\s*m(in)?/); // Matches "31m" or "31 min"
+
+    if (hourMatch) hours = parseInt(hourMatch[1], 10);
+    if (minuteMatch) minutes = parseInt(minuteMatch[1], 10);
+
+    console.log(`→ Parsed: ${hours} hours, ${minutes} minutes`);
+    return hours * 60 + minutes;
+}
+
+function formatTotalDuration(totalMinutes) {
+    const h = Math.floor(totalMinutes / 60);
+    const m = totalMinutes % 60;
+    return `${h} h ${m} min`;
+}
 // Create trip summary HTML
 function createTripSummary(tripData) {
-    let tripRows = '';
-    let tripNumber = 1;
-    
-    tripData.forEach(tripObj => {
-        const tripKey = Object.keys(tripObj)[0];
-        const trip = tripObj[tripKey];
-        
-        tripRows += `
-            <tr>
-                <td>${tripNumber.toString().padStart(2, '0')}</td>
-                <td>${formatTime(trip.start_time)}</td>
-                <td>${formatTime(trip.end_time)}</td>
-                <td>${trip.trip_distance}</td>
-                <td>${parseDuration(trip.duration)}</td>
-                <td>${trip.max_speed}</td>
-                <td>${trip.average_speed}</td>
-            </tr>
-        `;
-        tripNumber++;
-    });
+let tripRows = '';
+let tripNumber = 1;
+let totalMinutes = 0;
 
-    return `
-        <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
-        <table>
-            <tr>
-                <th>🚍 Trip No</th>
-                <th>⏰ Start Time</th>
-                <th>🔚 End Time</th>
-                <th>⏳ Trip Distance</th>
-                <th>⏲ Duration</th>
-                <th>🚀 Max Speed</th>
-                <th>🎯 Avg Speed</th>
-            </tr>
-            ${tripRows}
-        </table>
+tripData.forEach(tripObj => {
+    const tripKey = Object.keys(tripObj)[0];
+    const trip = tripObj[tripKey];
+
+    totalMinutes += parseDuration(trip.duration);
+
+    tripRows += `
+        <tr>
+            <td>${tripNumber.toString().padStart(2, '0')}</td>
+            <td>${formatTime(trip.start_time)}</td>
+            <td>${formatTime(trip.end_time)}</td>
+            <td>${trip.trip_distance}</td>
+            <td>${trip.duration}</td>
+            <td>${trip.max_speed}</td>
+            <td>${trip.average_speed}</td>
+        </tr>
     `;
+    tripNumber++;
+});
+
+console.log("TOTAL MINUTES:", totalMinutes); // 🔧 Debugging output
+
+const totalDurationFormatted = formatTotalDuration(totalMinutes);
+
+return `
+    <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">🚌 Trip Summary</h3>
+    <table>
+        <tr>
+            <th>🚍 Trip No</th>
+            <th>⏰ Start Time</th>
+            <th>🔚 End Time</th>
+            <th>⏳ Trip Distance</th>
+            <th>⏲ Duration</th>
+            <th>🚀 Max Speed</th>
+            <th>🎯 Avg Speed</th>
+        </tr>
+        ${tripRows}
+    </table>
+
+    <p style="text-align: right; font-weight: bold; margin-top: 8px;">
+        ⏱ Total Duration: ${totalDurationFormatted}
+    </p>
+`;
 }
 
 // Create individual bus report HTML
@@ -356,6 +387,32 @@ async function fetchAndRenderBusData() {
 // Function to refresh data
 function refreshData() {
     fetchAndRenderBusData();
+}
+function formatDuration(durationStr) {
+  // Example input: "0 days 00:31:52"
+  const regex = /(\d+)\s+days\s+(\d{2}):(\d{2}):(\d{2})/;
+  const match = durationStr.match(regex);
+
+  if (!match) return durationStr; // fallback if format is unexpected
+
+  let days = parseInt(match[1], 10);
+  let hours = parseInt(match[2], 10);
+  let minutes = parseInt(match[3], 10);
+  let seconds = parseInt(match[4], 10);
+
+  // Add days to hours if days > 0
+  hours += days * 24;
+
+  // Round up minutes if seconds >= 30 (optional)
+  if (seconds >= 30) {
+    minutes++;
+    if (minutes === 60) {
+      minutes = 0;
+      hours++;
+    }
+  }
+
+  return `${hours}h ${minutes}m`;
 }
 
 // Initialize on page load
