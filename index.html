@@ -160,13 +160,41 @@ function createSystemStatus() {
 }
 
 // Create performance summary HTML
-function createPerformanceSummary(activitySummary) {
+function createPerformanceSummary(activitySummary,Trips) {
+    let tripRows = '';
+let tripNumber = 1;
+let totalMinutes = 0;
+
+Trips.forEach(tripObj => {
+    const tripKey = Object.keys(tripObj)[0];
+    const trip = tripObj[tripKey];
+
+    totalMinutes += parseDuration(trip.duration);
+
+    tripRows += `
+        <tr>
+            <td>${tripNumber.toString().padStart(2, '0')}</td>
+            <td>${formatTime(trip.start_time)}</td>
+            <td>${formatTime(trip.end_time)}</td>
+            <td>${trip.trip_distance}</td>
+            <td>${trip.duration}</td>
+            <td>${formatSpeed(trip.max_speed)}</td>
+            <td>${trip.average_speed}</td>
+        </tr>
+    `;
+    tripNumber++;
+});
+
+console.log("TOTAL MINUTES:", totalMinutes); // 🔧 Debugging output
+
+const totalDurationFormatted = formatTotalDuration(totalMinutes);
+
     return `
         <h3 style="text-align: center; color: #6a0dad; margin: 8px 0;">📊 Performance & Activity Summary</h3>
         <table>
             <tr>
                 <td>📏 Total Distance<br><strong>${activitySummary.total_distance}</strong></td>
-                <td>⏱ Running Time<br><strong>${parseDuration(activitySummary.running_time)}</strong></td>
+                <td>⏱ Running Time<br><strong>${(totalDurationFormatted)}</strong></td>
                 <td>🚀 Max Speed<br><strong>${formatSpeed(activitySummary.max_speed)}</strong></td>
                 <td>🎯 Average Speed<br><strong>${activitySummary.average_speed}</strong></td>
             </tr>
@@ -265,10 +293,6 @@ return `
         </tr>
         ${tripRows}
     </table>
-
-    <p style="text-align: right; font-weight: bold; margin-top: 8px;">
-        ⏱ Total Duration: ${totalDurationFormatted}
-    </p>
 `;
 }
 
@@ -287,7 +311,7 @@ function createBusReport(busName, busData) {
         <div class="bus-container">
             <h2 style="text-align: center; color: #6a0dad; margin: 10px 0;">🚍 ${busNumber}</h2>
             ${createSystemStatus()}
-            ${createPerformanceSummary(busData.activity_summary)}
+            ${createPerformanceSummary(busData.activity_summary,busData.trip_summary)}
             ${createAttendanceReport(busData.route_wise_attendance_report)}
             ${createTripSummary(busData.trip_summary)}
             
